@@ -1,0 +1,38 @@
+!blue 2.0
+//=============================================================================
+//
+//  File:         /node_modules/rwt-storyboard/rwt-storyboard.blue
+//  Language:     Blue-phrase
+//  Copyright:    Read Write Tools © 2020
+//  License:      MIT
+// Initial date:  Sep 7, 2020
+//  Contents:     Timed sequence of panels that tell a story
+//
+//=============================================================================
+
+/* Create a sourceref file with panels consisting of
+   a collection of <section> element, each with arbitrary
+   content, for example:
+
+section *data-next='fade-in' *data-prev='fade-out' {
+	Ask a leading question
+}
+section *data-next='fade-in' *data-prev='fade-out' {
+	Pose a suggested answer
+}
+section *data-next='fade-in' *data-prev='fade-out' {
+	State the product's feature 
+}
+section *data-next='fade-in' *data-prev='fade-out' {
+	Assert that user needs the product
+}
+section *data-next='fade-in' *data-prev='fade-out' {
+	Give user easy way to get it
+}
+*/
+
+!option --fragment
+
+div #frame {
+	div #controller
+}
