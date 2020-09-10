@@ -127,11 +127,11 @@ Here's an example:
 
 ### Panel template
 
-The sourceref file should contain valid HTML consisting of two or more <section>
-element. The contents of each <section> is treated as a panel.
+The sourceref file should contain valid HTML consisting of two or more `section` elements.
+The contents of each `section` is treated as a panel.
 
 Transition effects are declared by adding the two special attributes `data-next` and
-`data-prev` to each <section> . In this example (shown using <span>BLUE</span><span>
+`data-prev` to each `section`. In this example (shown using <span>BLUE</span><span>
 PHRASE</span> notation for clarity), each panel will transition to visibility using `fade-in`
 and transition to hidden using `fade-out`:
 
