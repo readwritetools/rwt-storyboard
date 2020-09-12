@@ -219,7 +219,7 @@ export default class RwtStoryboard extends HTMLElement {
 	registerIntersectionObserver() {
 		var intersectionObserver = new IntersectionObserver((entries) => {
 			if (entries[0].isIntersecting == true) {
-				if (entries[0]['intersectionRatio'] == 1) 			// fully visible
+				if (entries[0]['intersectionRatio'] >= 0.95) 		// fully visible, or nearly so
 					this.startSequence();
 				else 												// partially visible
 					this.suspendSequence();
