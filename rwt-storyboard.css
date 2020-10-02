@@ -29,9 +29,11 @@
 	--background: var(--black);
 	--button-color: var(--pure-white);
 
-	/* custom element dimensions */	
-	--height: 20rem;
-	--width: 20rem;
+	/* custom element dimensions */
+	--media-factor: 1.0;	
+	--font-basis: 1.0;
+	--width: calc(10rem * var(--font-basis) * var(--media-factor));
+	--height: calc(40rem * var(--font-basis) * var(--media-factor));
 	
 	/* panel time variables */	
 	--duration-in: 2s;
@@ -111,7 +113,7 @@ section {
 	align-items: center;
 	justify-content: center;
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 2rem;
+	font-size: calc(2rem * var(--font-basis) * var(--media-factor));
 	background-color: var(--background);
 	color: var(--color);
 	padding: 0;
@@ -228,6 +230,18 @@ section p {
 @keyframes to-bottom {
 	from { top: 0px; }
 	to   { top: var(--height); }
+}
+
+/* ------------- media queries ------------ */
+@media only screen and (max-width: 900px) {
+    :host {
+        --media-factor: 0.85;
+    }
+}
+@media only screen and (max-width: 564px) {
+    :host {
+        --media-factor: 0.7;
+    }
 }
 	
 	

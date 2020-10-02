@@ -176,10 +176,13 @@ to-bottom
 The width and height of the storyboard are set using the CSS variables `--width` and
 `--height`.
 
+Adjust the `--font-basis` to shrink or grow the entire storyboard.
+
 ```css
 rwt-storyboard {
-    --height: 10rem;
-    --width: 40rem;
+    --font-basis: 1.0;
+    --width: calc(10rem * var(--font-basis));
+    --height: calc(40rem * var(--font-basis));
 }
 ```
 
@@ -200,6 +203,19 @@ Important: the content of each panel can be customized with any CSS you want,
 but that CSS must be included in the sourceref template file together with the
 panel's HTML declarations. CSS that is outside the component is firewalled and
 will not pierce the document/component barrier.
+
+#### Threshold
+
+Panels will only transition when visible. When the document is scrolled outside
+the user's viewport, the transitioning effect is suspended. The component can be
+customized to suspend/resume transitions when only a portion of the full
+storyboard is visible. The threshold for this is a value between 0.0 and 0.99.
+
+```css
+rwt-storyboard {
+    --threshold: 0.95;
+}
+```
 
 #### Timing variables
 
