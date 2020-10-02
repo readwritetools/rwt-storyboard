@@ -46,6 +46,9 @@ export default class RwtStoryboard extends HTMLElement {
 		this.initialDelay = 0;			// CSS var(--initial-delay) in milliseconds
 		this.sequenceTime = 0;			// CSS var(--sequence-time) in milliseconds
 		this.holdTime = 0;				// CSS var(--hold-time) in milliseconds
+		this.threshold = 0.95;			// CSS var(--threshold) a value from 0.0 to 0.99
+
+		this.intersectionObserver = null;
 		
 		Object.seal(this);
 	}
@@ -203,6 +206,7 @@ export default class RwtStoryboard extends HTMLElement {
 		this.initialDelay = this.getCSSTimeVariable('--initial-delay');
 		this.sequenceTime = this.getCSSTimeVariable('--sequence-time');
 		this.holdTime = this.getCSSTimeVariable('--hold-time');
+		this.threshold = this.getCSSFloatVariable('--threshold');
 	}
 
 	//^ Listen for clicks on frame and controller buttons
@@ -217,19 +221,15 @@ export default class RwtStoryboard extends HTMLElement {
 	//^ Start the panel sequence when the frame is fully within the viewport
 	//  Suspend the panel sequence when the frame is fully outside the viewport
 	registerIntersectionObserver() {
-		var intersectionObserver = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting == true) {
-				if (entries[0]['intersectionRatio'] >= 0.95) 		// fully visible, or nearly so
-					this.startSequence();
-				else 												// partially visible
-					this.suspendSequence();
-			}
-			else  // (entries[0].isIntersecting == false)			// fully invisible
+		this.intersectionObserver = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting == true)
+				this.startSequence();
+			else
 				this.suspendSequence();
 			
-		}, { threshold: [0, 1] });
+		}, { threshold: this.threshold });
 	
-		intersectionObserver.observe(this.frame);
+		this.intersectionObserver.observe(this.frame);
 	}
 
 	//^ Inform the document's custom element that it is ready for programmatic use 
@@ -410,7 +410,23 @@ export default class RwtStoryboard extends HTMLElement {
 		else
 			milliseconds = parseInt(sequenceTime) * 1000;
 		
-		return milliseconds
+		return milliseconds;
+	}
+	
+	//> variableName is something declared in CSS which has a floating point value from 0.0 to 1.0
+	//< a number
+	getCSSFloatVariable(variableName) {
+		var cssStyles = getComputedStyle(this);
+		var value = cssStyles.getPropertyValue(variableName);
+		var float = parseFloat(value);
+		if (Number.isNaN(float))
+			float = 0.95;
+		if (float < 0.0)
+			float = 0.0;
+		if (float > 0.99)
+			float = 0.99;
+		
+		return float;
 	}
 }
 
