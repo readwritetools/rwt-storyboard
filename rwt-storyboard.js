@@ -216,6 +216,9 @@ export default class RwtStoryboard extends HTMLElement {
 		var buttons = this.shadowRoot.querySelectorAll('#controller button');
 		for (let button of buttons)
 			button.addEventListener('click', this.onClickButton.bind(this));
+		
+		// stop sequencing when any other component broadcasts 'collapse-popup'
+		document.addEventListener('collapse-popup', this.onCollapsePopup.bind(this));
 	}
 
 	//^ Start the panel sequence when the frame is fully within the viewport
@@ -284,6 +287,13 @@ export default class RwtStoryboard extends HTMLElement {
 		event.stopPropagation();
 	}
 
+	//^ Listen for an event on the document that another component
+	// has asked this component to stop what it's doing.
+	// Allow it resume naturally when the intersection observer triggers it.
+	onCollapsePopup(event) {
+		this.suspendSequence();
+	}
+	
 	//-------------------------------------------------------------------------
 	// component methods
 	//-------------------------------------------------------------------------
