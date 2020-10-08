@@ -1,6 +1,6 @@
 {
   "name": "rwt-storyboard",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Timed sequence of panels that tell a story, a standards-based DOM Component",
   "author": "Read Write Tools",
   "license": "MIT",
