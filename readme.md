@@ -15,7 +15,7 @@
 	<figcaption></figcaption>
 </figure>
 
-##### Open Source W3C Web Component
+##### Open Source DOM Component
 
 # Storyboard
 
@@ -29,12 +29,12 @@
 
 <table>
 	<tr><th>Abstract</th></tr>
-	<tr><td>The <span class=product>rwt-storyboard</span> web component displays a sequence of panels that tell a story. Transitions from one panel to the next can slide-in or fade-in to dramatic effect. The content of each panel is provided by an HTML template, and the sequencing speed can be controlled by CSS variables.</td></tr>
+	<tr><td>The <span class=product>rwt-storyboard</span> DOM component displays a sequence of panels that tell a story. Transitions from one panel to the next can slide-in or fade-in to dramatic effect. The content of each panel is provided by an HTML template, and the sequencing speed can be controlled by CSS variables.</td></tr>
 </table>
 
 ### Motivation
 
-The <span>rwt-storyboard</span> web component is intended for use on
+The <span>rwt-storyboard</span> DOM component is intended for use on
 web pages where the author wants to grab the reader's attention and funnel them
 towards a particular action.
 
@@ -54,9 +54,17 @@ The component has these features:
    * Round buttons along the bottom of the storyboard allow the user to override the
       auto-sequencing to display a particular panel.
 
+#### In the wild
+
+To see an example of this component in use, visit the <a href='https://readwritestack.com/'>READ WRITE STACK</a>
+website. Each page uses this component to tell a user story about apps, plugins
+and DOM components. To understand what's going on under the hood, use the
+browser's inspector to view the HTML source code and network activity, and
+follow along as you read this documentation.
+
 #### Prerequisites
 
-The <span>rwt-storyboard</span> web component works in any browser
+The <span>rwt-storyboard</span> DOM component works in any browser
 that supports modern W3C standards. Templates are written using <span>BLUE
 </span><span>PHRASE</span> notation, which can be compiled into HTML using the free <a href='https://hub.readwritetools.com/desktop/rwview.blue'>Read Write View</a>
 desktop app. It has no other prerequisites. Distribution and installation are
@@ -81,14 +89,14 @@ on your development computer.
 npm init
 ```
 
-   * Download and install the web component using the command:
+   * Download and install the DOM component using the command:
 ```bash
 npm install rwt-storyboard
 ```
 
 
-Important note: This web component uses Node.js and NPM and `package.json` as a
-convenient *distribution and installation* mechanism. The web component itself
+Important note: This DOM component uses Node.js and NPM and `package.json` as a
+convenient *distribution and installation* mechanism. The DOM component itself
 does not need them.
 
 #### Installation using Github
@@ -96,14 +104,14 @@ does not need them.
 If you are more comfortable using Github for installation, follow these steps:
 
    * Create a directory `node_modules` in the root of your web project.
-   * Clone the <span>rwt-storyboard</span> web component into it using the
+   * Clone the <span>rwt-storyboard</span> DOM component into it using the
       command:
 ```bash
 git clone https://github.com/readwritetools/rwt-storyboard.git
 ```
 
 
-### Using the web component
+### Using the DOM component
 
 After installation, you need to add two things to your HTML page to make use of
 it.
@@ -256,11 +264,26 @@ The component issues life-cycle events.
 <dl>
 	<dt><code>component-loaded</code></dt>
 	<dd>Sent when the component is fully loaded and ready to be used. As a convenience you can use the <code>waitOnLoading()</code> method which returns a promise that resolves when the <code>component-loaded</code> event is received. Call this asynchronously with <code>await</code>.</dd>
+	<dt><code>collapse-popup</code></dt>
+	<dd>The component listens on DOM <code>document</code> for <code>collapse-popup</code> messages, which are sent when other components are activated. Upon receipt it will suspend sequencing.</dd>
 </dl>
+
+---
+
+### Reference
+
+
+<table>
+	<tr><td><img src='/img/read-write-hub.png' alt='DOM components logo' width=40 /></td>	<td>Documentation</td> 		<td><a href='https://hub.readwritetools.com/components/storyboard.blue'>READ WRITE HUB</a></td></tr>
+	<tr><td><img src='/img/git.png' alt='git logo' width=40 /></td>	<td>Source code</td> 			<td><a href='https://github.com/readwritetools/rwt-storyboard'>github</a></td></tr>
+	<tr><td><img src='/img/dom-components.png' alt='DOM components logo' width=40 /></td>	<td>Component catalog</td> 	<td><a href='https://domcomponents.com/storyboard.blue'>DOM COMPONENTS</a></td></tr>
+	<tr><td><img src='/img/npm.png' alt='npm logo' width=40 /></td>	<td>Package installation</td> <td><a href='https://www.npmjs.com/package/rwt-storyboard'>npm</a></td></tr>
+	<tr><td><img src='/img/read-write-stack.png' alt='Read Write Stack logo' width=40 /></td>	<td>Publication venue</td>	<td><a href='https://readwritestack.com/components/storyboard.blue'>READ WRITE STACK</a></td></tr>
+</table>
 
 ### License
 
-The <span>rwt-storyboard</span> web component is licensed under the
+The <span>rwt-storyboard</span> DOM component is licensed under the
 MIT License.
 
 <img src='/img/blue-seal-mit.png' width=80 align=right />
@@ -272,13 +295,4 @@ MIT License.
 	<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
 	<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 </details>
-
-### Availability
-
-
-<table>
-	<tr><td>Source code</td> 			<td><a href='https://github.com/readwritetools/rwt-storyboard'>github</a></td></tr>
-	<tr><td>Package installation</td> <td><a href='https://www.npmjs.com/package/rwt-storyboard'>NPM</a></td></tr>
-	<tr><td>Documentation</td> 		<td><a href='https://hub.readwritetools.com/components/storyboard.blue'>Read Write Hub</a></td></tr>
-</table>
 
