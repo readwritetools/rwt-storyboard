@@ -11,8 +11,8 @@
 
 
 <figure>
-	<img src='/img/components/storyboard/rwt-storyboard.png' width='100%' />
-	<figcaption></figcaption>
+	<img src='/img/components/storyboard/snake-oil.jpg' width='100%' />
+	<figcaption>The elixir for what ails you - a tonic for health and happiness</figcaption>
 </figure>
 
 ##### Open Source DOM Component

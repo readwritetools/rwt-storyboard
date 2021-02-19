@@ -158,7 +158,7 @@ export default class RwtStoryboard extends HTMLElement {
 	//  That file should contain HTML with <section> elements, which may contain
 	//  anything as long as it fits within the --width and --height of the frame
 	//
-	//< returns a document-fragment suitable for appending to the component's 'quickpicMenu' element
+	//< returns a document-fragment suitable for appending to the component's frame element
 	//< returns null if the user has not specified a sourceref attribute or
 	//  if the server does not respond with 200 or 304
 	async fetchPanels() {
