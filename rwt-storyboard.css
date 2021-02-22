@@ -1,247 +1,69 @@
-/*=============================================================================
-
-  File:         /node_modules/rwt-storyboard/rwt-storyboard.css
-  Language:     CSS
-  Copyright:    Read Write Tools © 2020
-  License:      MIT
-  Initial date: Sep 7, 2020
-  Contents:     Timed sequence of panels that tell a story
-
-=============================================================================*/
-
-:host {
-	--pure-black: #000;
-	--nav-black: #111;
-	--light-black: #171717;
-	--medium-black: #222;
-	--black: #333;
-	--dark-gray: #555;
-	--gray: #777;
-	--white: #ccc;
-	--pure-white: #fff;
-	--js-blue: #76afe8;
-	--title-blue: #42affa;
-	--yellow: #ffffa4;
-	--red: #ff3d3d;
-		
-	/* custom element decorations */
-	--color: var(--white);
-	--background: var(--black);
-	--button-color: var(--pure-white);
-
-	/* custom element dimensions */
-	--media-factor: 1.0;	
-	--font-basis: 1.0;
-	--width: calc(10rem * var(--font-basis) * var(--media-factor));
-	--height: calc(40rem * var(--font-basis) * var(--media-factor));
-	
-	/* panel time variables */	
-	--duration-in: 2s;
-	--duration-out: 2s;
-	--delay-in: 0s;
-	--delay-out: 0s;	
-	--initial-delay: 6s;
-	--sequence-time: 4s;
-	--hold-time: 6s;
+/* Copyright (c) 2021 Read Write Tools. Legal use subject to the Storyboard DOM Component Software License Agreement. */
+:host{--pure-black:#000;--nav-black:#111;--light-black:#171717;--medium-black:#222;--black:#333;--dark-gray:#555;--gray:#777;--white:#ccc;--pure-white:#fff;--js-blue:#76afe8;--title-blue:#42affa;--yellow:#ffffa4;--red:#ff3d3d;--color:var(--white);--background:var(--black);--button-color:var(--pure-white);--media-factor:1.0;--font-basis:1.0;--width:calc(10rem * var(--font-basis) * var(--media-factor));--height:calc(40rem * var(--font-basis) * var(--media-factor));--duration-in:2s;--duration-out:2s;--delay-in:0s;--delay-out:0s;--initial-delay:6s;--sequence-time:4s;--hold-time:6s}
+:host{display:block;position:relative;width:var(--width);height:var(--height)}
+#frame{position:absolute;top:0;left:0;width:var(--width);height:var(--height);color:var(--color);background-color:var(--background);overflow:hidden;margin:0;padding:0;border:none;cursor:pointer;box-sizing:border-box}
+#controller{display:flex;position:absolute;bottom:0;left:0;width:100%;justify-content:center;z-index:1}
+#controller button{font-size:2rem;line-height:0;width:2rem;height:2rem;background-color:transparent;color:var(--button-color);opacity:.5;margin:0 .5rem;padding:0;border:none}
+#controller button.current-panel{font-size:2.5rem;opacity:1;margin:0 .25rem;color:var(--button-color)}
+#controller button:hover{opacity:.8;cursor:pointer}
+#controller button:focus{outline:0}
+section{display:flex;position:absolute;top:0;left:0;width:var(--width);height:var(--height);align-items:center;justify-content:center;font-family:'Source Sans Pro',sans-serif;font-size:calc(2rem * var(--font-basis) * var(--media-factor));background-color:var(--background);color:var(--color);padding:0;margin:0;box-sizing:border-box}
+section p{text-align:center}
+.show{display:flex}
+.hide{display:none}
+.fade-in{animation:fade-in var(--duration-in) var(--delay-in) linear both}
+@keyframes fade-in{
+from{opacity:0}
+to{opacity:1}
 }
-
-:host {
-	display: block;
-	position: relative;
-	width: var(--width);
-	height: var(--height);
+.fade-out{animation:fade-out var(--duration-out) var(--delay-out) linear both}
+@keyframes fade-out{
+from{opacity:1}
+to{opacity:0}
 }
-
-#frame {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: var(--width);
-	height: var(--height);
-	color: var(--color);
-	background-color: var(--background);
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	border: none;
-	cursor: pointer;
-	box-sizing: border-box;
+.from-left{animation:from-left var(--duration-in) var(--delay-in) linear both}
+@keyframes from-left{
+from{left:calc(0px - var(--width))}
+to{left:0}
 }
-
-#controller {
-	display: flex;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	justify-content: center;
-	z-index: 1;
+.to-left{animation:to-left var(--duration-out) var(--delay-out) linear both}
+@keyframes to-left{
+from{left:0}
+to{left:calc(0px - var(--width))}
 }
-
-#controller button {
-	font-size: 2rem;
-	line-height: 0;
-	width: 2rem;
-	height: 2rem;
-	background-color: transparent;
-	color: var(--button-color);
-	opacity: 0.5;
-	margin: 0 0.5rem;
-	padding: 0;
-	border: none;
+.from-right{animation:from-right var(--duration-in) var(--delay-in) linear both}
+@keyframes from-right{
+from{left:var(--width)}
+to{left:0}
 }
-#controller button.current-panel {
-	font-size: 2.5rem;
-	opacity: 1.0;
-	margin: 0 0.25rem;
-	color: var(--button-color);
+.to-right{animation:to-right var(--duration-out) var(--delay-out) linear both}
+@keyframes to-right{
+from{left:0}
+to{left:var(--width)}
 }
-#controller button:hover {
-	opacity: 0.8;
-	cursor: pointer;
+.from-top{animation:from-top var(--duration-in) var(--delay-in) linear both}
+@keyframes from-top{
+from{top:calc(0px - var(--height))}
+to{top:0}
 }
-#controller button:focus {
-	outline: none;
+.to-top{animation:to-top var(--duration-out) var(--delay-out) linear both}
+@keyframes to-top{
+from{top:0}
+to{top:calc(0px - var(--height))}
 }
-section {
-	display: flex;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	width: var(--width);
-	height: var(--height);
-	align-items: center;
-	justify-content: center;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-size: calc(2rem * var(--font-basis) * var(--media-factor));
-	background-color: var(--background);
-	color: var(--color);
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
+.from-bottom{animation:from-bottom var(--duration-in) var(--delay-in) linear both}
+@keyframes from-bottom{
+from{top:var(--height)}
+to{top:0}
 }
-
-section p {
-	text-align: center;
+.to-bottom{animation:to-bottom var(--duration-out) var(--delay-out) linear both}
+@keyframes to-bottom{
+from{top:0}
+to{top:var(--height)}
 }
-
-/* ----------  users should apply these names to <section data-prev='' data-next=''> ---------- */
-/*
-	fade-in
-	from-left
-	from-right
-	from-top
-	from-bottom
-
-	fade-out
-	to-left
-	to-right
-	to-top
-	to-bottom
-*/
-
-/* ----------  below here for private use by the component ---------- */
-.show {
-	display: flex;
+@media only screen and (max-width:900px){
+:host{--media-factor:0.85}
 }
-.hide {
-	display: none;
+@media only screen and (max-width:564px){
+:host{--media-factor:0.7}
 }
-
-/* ----------  fadein / fadeout ---------- */
-.fade-in {
-	animation: fade-in var(--duration-in) var(--delay-in) linear both;
-}
-@keyframes fade-in {
-	from { opacity: 0.0; }
-	to   { opacity: 1.0; }
-}
-.fade-out {
-	animation: fade-out var(--duration-out) var(--delay-out) linear both;
-}
-@keyframes fade-out {
-	from { opacity: 1.0; }
-	to   { opacity: 0.0; }
-}
-
-	
-/* ----------  from left / to left ---------- */
-.from-left {
-	animation: from-left var(--duration-in) var(--delay-in) linear both;
-}
-@keyframes from-left {
-	from { left: calc(0px - var(--width)); }
-	to   { left: 0px; }
-}
-.to-left {
-	animation: to-left var(--duration-out) var(--delay-out) linear both;
-}
-@keyframes to-left {
-	from { left: 0px; }
-	to   { left: calc(0px - var(--width)); }
-}
-	
-
-/* ----------  from right / to right ---------- */
-.from-right {
-	animation: from-right var(--duration-in) var(--delay-in) linear both;
-}
-@keyframes from-right {
-	from { left: var(--width); }
-	to   { left: 0px; }
-}
-.to-right {
-	animation: to-right var(--duration-out) var(--delay-out) linear both;
-}
-@keyframes to-right {
-	from { left: 0px; }
-	to   { left: var(--width); }
-}
-		
-	
-/* ----------  from top / to top ---------- */
-.from-top {
-	animation: from-top var(--duration-in) var(--delay-in) linear both;
-}
-@keyframes from-top {
-	from { top: calc(0px - var(--height)); }
-	to   { top: 0px; }
-}
-.to-top {
-	animation: to-top var(--duration-out) var(--delay-out) linear both;
-}
-@keyframes to-top {
-	from { top: 0px; }
-	to   { top: calc(0px - var(--height)); }
-}
-	
-	
-/* ----------  from bottom / to bottom ---------- */
-.from-bottom {
-	animation: from-bottom var(--duration-in) var(--delay-in) linear both;
-}
-@keyframes from-bottom {
-	from { top: var(--height); }
-	to   { top: 0px; }
-}
-.to-bottom {
-	animation: to-bottom var(--duration-out) var(--delay-out) linear both;
-}
-@keyframes to-bottom {
-	from { top: 0px; }
-	to   { top: var(--height); }
-}
-
-/* ------------- media queries ------------ */
-@media only screen and (max-width: 900px) {
-    :host {
-        --media-factor: 0.85;
-    }
-}
-@media only screen and (max-width: 564px) {
-    :host {
-        --media-factor: 0.7;
-    }
-}
-	
-	

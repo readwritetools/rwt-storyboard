@@ -3,14 +3,11 @@
   "version": "1.0.8",
   "description": "Timed sequence of panels that tell a story, a standards-based DOM Component",
   "author": "Read Write Tools",
-  "license": "MIT",
+  "license": "see license.html",
   "module": "rwt-storyboard.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/readwritetools/rwt-storyboard.git"
-  },
-  "scripts": {
-    "bump-version": "npm version patch && git push && git push --tags"
   },
   "keywords": [
     "web-component",
@@ -24,8 +21,12 @@
   },
   "homepage": "https://hub.readwritetools.com/components/storyboard.blue",
   "files": [
-    "rwt-storyboard.blue",
+    "img",
+    "license.html",
+    "readme.md",
     "rwt-storyboard.css",
-    "rwt-storyboard.js"
+    "rwt-storyboard.html",
+    "rwt-storyboard.js",
+    "rwt-registration-keys.js"
   ]
 }
