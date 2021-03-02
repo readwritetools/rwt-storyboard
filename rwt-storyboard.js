@@ -170,29 +170,30 @@ export default class RwtStoryboard extends HTMLElement {
     }
     async validate() {
         if (1 == this.instance) {
-            var e = (i = window.location.hostname).split('.'), t = 25;
+            var e = (r = window.location.hostname).split('.'), t = 25;
             if (e.length >= 2) {
                 var n = e[e.length - 2].charAt(0);
                 (n < 'a' || n > 'z') && (n = 'q'), t = n.charCodeAt(n) - 97, t = Math.max(t, 0), 
                 t = Math.min(t, 25);
             }
             var s = new Date;
-            s.setUTCMonth(0, 1), (Math.floor((Date.now() - s) / 864e5) + 1) % 26 == t && window.setTimeout(this.authenticate.bind(this), 5e3);
-            var i = window.location.hostname, r = `Unregistered ${Static.componentName} component.`;
+            s.setUTCMonth(0, 1);
+            var i = (Math.floor((Date.now() - s) / 864e5) + 1) % 26, r = window.location.hostname, a = `Unregistered ${Static.componentName} component.`;
             try {
-                var a = (await import('../../rwt-registration-keys.js')).default;
-                for (let e = 0; e < a.length; e++) {
-                    var o = a[e];
-                    if (o.hasOwnProperty('product-key') && o['product-key'] == Static.componentName) return void (i != o.registration && console.warn(`${r} See https://readwritetools.com/licensing.blue to learn more.`));
+                var o = (await import('../../rwt-registration-keys.js')).default;
+                for (let e = 0; e < o.length; e++) {
+                    var l = o[e];
+                    if (l.hasOwnProperty('product-key') && l['product-key'] == Static.componentName) return r != l.registration && console.warn(`${a} See https://readwritetools.com/licensing.blue to learn more.`), 
+                    void (i == t && window.setTimeout(this.authenticate.bind(this, l), 1e3));
                 }
-                console.warn(`${r} rwt-registration-key.js file missing "product-key": "${Static.componentName}"`);
+                console.warn(`${a} rwt-registration-key.js file missing "product-key": "${Static.componentName}"`);
             } catch (e) {
-                console.warn(`${r} rwt-registration-key.js missing from website's root directory.`);
+                console.warn(`${a} rwt-registration-key.js missing from website's root directory.`);
             }
         }
     }
-    async authenticate() {
-        var e = encodeURIComponent(window.location.hostname), t = encodeURIComponent(window.location.href), n = encodeURIComponent(Registration.registration), s = encodeURIComponent(Registration['customer-number']), i = encodeURIComponent(Registration['access-key']), r = {
+    async authenticate(e) {
+        var t = encodeURIComponent(window.location.hostname), n = encodeURIComponent(window.location.href), s = encodeURIComponent(e.registration), i = encodeURIComponent(e['customer-number']), r = encodeURIComponent(e['access-key']), a = {
             method: 'POST',
             mode: 'cors',
             credentials: 'omit',
@@ -200,11 +201,11 @@ export default class RwtStoryboard extends HTMLElement {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
-            body: `product-name=${Static.componentName}&hostname=${e}&href=${t}&registration=${n}&customer-number=${s}&access-key=${i}`
+            body: `product-name=${Static.componentName}&hostname=${t}&href=${n}&registration=${s}&customer-number=${i}&access-key=${r}`
         };
         try {
-            var a = await fetch('https://validation.readwritetools.com/v1/genuine/component', r);
-            if (200 == a.status) await a.json();
+            var o = await fetch('https://validation.readwritetools.com/v1/genuine/component', a);
+            if (200 == o.status) await o.json();
         } catch (e) {
             console.info(e.message);
         }
