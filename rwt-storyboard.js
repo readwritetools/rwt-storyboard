@@ -21,47 +21,48 @@ export default class RwtStoryboard extends HTMLElement {
     }
     async connectedCallback() {
         if (this.isConnected) try {
-            var e = await this.getHtmlFragment(), t = await this.getCssStyleElement(), s = await this.fetchPanels();
-            if (null != s) e.getElementById('frame').appendChild(s);
+            var e = await this.getHtmlFragment(), t = await this.getCssStyleElement(), n = await this.fetchPanels();
+            if (null != n) e.getElementById('frame').appendChild(n);
             this.attachShadow({
                 mode: 'open'
             }), this.shadowRoot.appendChild(e), this.shadowRoot.appendChild(t), this.identifyChildren(), 
             this.createControllerButtons(), this.readTimingVariables(), this.registerEventListeners(), 
-            this.registerIntersectionObserver(), this.showFirstPanel(), this.sendComponentLoaded();
+            this.registerIntersectionObserver(), this.showFirstPanel(), this.sendComponentLoaded(), 
+            this.validate();
         } catch (e) {
             console.log(e.message);
         }
     }
     getHtmlFragment() {
         return new Promise((async (e, t) => {
-            var s = `${Static.componentName}-html-template-ready`;
-            if (document.addEventListener(s, (() => {
+            var n = `${Static.componentName}-html-template-ready`;
+            if (document.addEventListener(n, (() => {
                 var t = document.createElement('template');
                 t.innerHTML = Static.htmlText, e(t.content);
             })), 1 == this.instance) {
-                var n = await fetch(Static.htmlURL, {
+                var s = await fetch(Static.htmlURL, {
                     cache: 'no-cache',
                     referrerPolicy: 'no-referrer'
                 });
-                if (200 != n.status && 304 != n.status) return void t(new Error(`Request for ${Static.htmlURL} returned with ${n.status}`));
-                Static.htmlText = await n.text(), document.dispatchEvent(new Event(s));
-            } else null != Static.htmlText && document.dispatchEvent(new Event(s));
+                if (200 != s.status && 304 != s.status) return void t(new Error(`Request for ${Static.htmlURL} returned with ${s.status}`));
+                Static.htmlText = await s.text(), document.dispatchEvent(new Event(n));
+            } else null != Static.htmlText && document.dispatchEvent(new Event(n));
         }));
     }
     getCssStyleElement() {
         return new Promise((async (e, t) => {
-            var s = `${Static.componentName}-css-text-ready`;
-            if (document.addEventListener(s, (() => {
+            var n = `${Static.componentName}-css-text-ready`;
+            if (document.addEventListener(n, (() => {
                 var t = document.createElement('style');
                 t.innerHTML = Static.cssText, e(t);
             })), 1 == this.instance) {
-                var n = await fetch(Static.cssURL, {
+                var s = await fetch(Static.cssURL, {
                     cache: 'no-cache',
                     referrerPolicy: 'no-referrer'
                 });
-                if (200 != n.status && 304 != n.status) return void t(new Error(`Request for ${Static.cssURL} returned with ${n.status}`));
-                Static.cssText = await n.text(), document.dispatchEvent(new Event(s));
-            } else null != Static.cssText && document.dispatchEvent(new Event(s));
+                if (200 != s.status && 304 != s.status) return void t(new Error(`Request for ${Static.cssURL} returned with ${s.status}`));
+                Static.cssText = await s.text(), document.dispatchEvent(new Event(n));
+            } else null != Static.cssText && document.dispatchEvent(new Event(n));
         }));
     }
     async fetchPanels() {
@@ -71,8 +72,8 @@ export default class RwtStoryboard extends HTMLElement {
             referrerPolicy: 'no-referrer'
         });
         if (200 != t.status && 304 != t.status) return null;
-        var s = await t.text(), n = document.createElement('template');
-        return n.innerHTML = s, n.content;
+        var n = await t.text(), s = document.createElement('template');
+        return s.innerHTML = n, s.content;
     }
     identifyChildren() {
         this.frame = this.shadowRoot.getElementById('frame'), this.controller = this.shadowRoot.getElementById('controller');
@@ -80,9 +81,9 @@ export default class RwtStoryboard extends HTMLElement {
         for (let t of e) this.panels.push(t);
     }
     createControllerButtons() {
-        for (let s = 0; s < this.panels.length; s++) {
-            var e = this.panels[s], t = document.createElement('button');
-            t.innerText = '●', t.setAttribute('type', 'button'), t.storyboardPanel = e, t.panelIndex = s, 
+        for (let n = 0; n < this.panels.length; n++) {
+            var e = this.panels[n], t = document.createElement('button');
+            t.innerText = '●', t.setAttribute('type', 'button'), t.storyboardPanel = e, t.panelIndex = n, 
             this.controller.appendChild(t), this.buttons.push(t);
         }
     }
@@ -131,15 +132,15 @@ export default class RwtStoryboard extends HTMLElement {
             this.showPanel(this.panels[0], this.buttons[0], !1), this.currentPanelIndex = 0;
         }
     }
-    showPanel(e, t, s) {
+    showPanel(e, t, n) {
         if (e != this.currentPanel) {
             this.previousPanel = this.currentPanel, this.currentPanel = e;
-            for (let e of this.panels) if (e == this.previousPanel) if (1 == s) {
-                var n = e.getAttribute('data-prev');
-                e.className = `${n} show`;
-            } else e.className = 'hide'; else if (e == this.currentPanel) if (1 == s) {
-                n = e.getAttribute('data-next');
-                e.className = `${n} show`;
+            for (let e of this.panels) if (e == this.previousPanel) if (1 == n) {
+                var s = e.getAttribute('data-prev');
+                e.className = `${s} show`;
+            } else e.className = 'hide'; else if (e == this.currentPanel) if (1 == n) {
+                s = e.getAttribute('data-next');
+                e.className = `${s} show`;
             } else e.className = 'show'; else e.className = 'hide';
             for (let e of this.buttons) e.className = e == t ? 'current-panel' : '';
         }
@@ -164,8 +165,49 @@ export default class RwtStoryboard extends HTMLElement {
         return null == t ? 0 : -1 != t.indexOf('ms') ? parseInt(t.substr(0, t.indexOf('ms'))) : -1 != t.indexOf('s') ? 1e3 * parseInt(t.substr(0, t.indexOf('s'))) : 1e3 * parseInt(t);
     }
     getCSSFloatVariable(e) {
-        var t = getComputedStyle(this).getPropertyValue(e), s = parseFloat(t);
-        return Number.isNaN(s) && (s = .95), s < 0 && (s = 0), s > .99 && (s = .99), s;
+        var t = getComputedStyle(this).getPropertyValue(e), n = parseFloat(t);
+        return Number.isNaN(n) && (n = .95), n < 0 && (n = 0), n > .99 && (n = .99), n;
+    }
+    async validate() {
+        if (1 == this.instance) {
+            var e = (i = window.location.hostname).split('.'), t = 25;
+            if (e.length >= 2) {
+                var n = e[e.length - 2].charAt(0);
+                (n < 'a' || n > 'z') && (n = 'q'), t = n.charCodeAt(n) - 97, t = Math.max(t, 0), 
+                t = Math.min(t, 25);
+            }
+            var s = new Date;
+            s.setUTCMonth(0, 1), (Math.floor((Date.now() - s) / 864e5) + 1) % 26 == t && window.setTimeout(this.authenticate.bind(this), 5e3);
+            var i = window.location.hostname, r = `Unregistered ${Static.componentName} component.`;
+            try {
+                var a = (await import('../../rwt-registration-keys.js')).default;
+                for (let e = 0; e < a.length; e++) {
+                    var o = a[e];
+                    if (o.hasOwnProperty('product-key') && o['product-key'] == Static.componentName) return void (i != o.registration && console.warn(`${r} See https://readwritetools.com/licensing.blue to learn more.`));
+                }
+                console.warn(`${r} rwt-registration-key.js file missing "product-key": "${Static.componentName}"`);
+            } catch (e) {
+                console.warn(`${r} rwt-registration-key.js missing from website's root directory.`);
+            }
+        }
+    }
+    async authenticate() {
+        var e = encodeURIComponent(window.location.hostname), t = encodeURIComponent(window.location.href), n = encodeURIComponent(Registration.registration), s = encodeURIComponent(Registration['customer-number']), i = encodeURIComponent(Registration['access-key']), r = {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'omit',
+            cache: 'no-cache',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            body: `product-name=${Static.componentName}&hostname=${e}&href=${t}&registration=${n}&customer-number=${s}&access-key=${i}`
+        };
+        try {
+            var a = await fetch('https://validation.readwritetools.com/v1/genuine/component', r);
+            if (200 == a.status) await a.json();
+        } catch (e) {
+            console.info(e.message);
+        }
     }
 }
 
